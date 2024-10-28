@@ -1,0 +1,26 @@
+{% extends 'Bases/base-global-s-header.html' %}
+{% load crispy_forms_tags %}
+
+{% block 'titulo' %}
+    Entrando
+{% endblock %}
+
+{% block 'body' %}
+    <div class="container-fluid" style="margin-top: 25vh;">
+        <div class="row">
+            <div class="col-8 col-md-6 col-lg-4 col-xl-2 mx-auto">
+                <form method="post">
+                    {% csrf_token %}
+
+                    <h1 class="display-6 text-center">Entrando</h1>
+
+                    <div class="d-flex flex-column">
+                        {{ form|crispy }}
+
+                        <button type="submit" class="btn btn-primary mt-4 align-self-end">Entrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

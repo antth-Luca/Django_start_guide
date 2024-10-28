@@ -1,0 +1,20 @@
+{% extends 'Bases/base-global-c-header.html' %}
+
+{% block 'titulo' %}
+    Home
+{% endblock %}
+
+{% block 'body' %}
+    <div class="container-fluid text-center mt-5">
+        <h1 class="h1 mb-2">Central de Links</h1>
+        <div class="row justify-content-center">
+            <div class="col-8 col-md-6">
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action active">Home</a>
+                    <a href="{% url 'ListCidade' %}" class="list-group-item list-group-item-action">Cidades</a>
+                    <a href="{% url 'ListCliente' %}" class="list-group-item list-group-item-action">Clientes</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

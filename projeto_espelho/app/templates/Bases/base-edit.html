@@ -1,0 +1,29 @@
+{% extends 'Bases/base-global-s-header.html' %}
+{% load crispy_forms_tags %}
+
+{% block 'titulo' %}
+    Editando
+{% endblock %}
+
+{% block 'body' %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-md-8 col-xl-4 mx-auto">
+                <form method="post">
+                    {% csrf_token %}
+
+                    <h6 class="display-6 text-center">Editando registro</h6>
+                    <h4 class="h4 mt-2 text-center">Editando {% block 'tipo_cadastro' %}{% endblock %}</h4>
+                    <h6 class="h6 mb-4 text-center">Os campos com (*) são obrigatórios!</h6>
+                    <h6 class="text-danger">{{ form.errors }}</h6>
+
+                    <div class="d-flex flex-column">
+                        {{ form|crispy }}
+
+                        <button type="submit" class="btn btn-primary mt-4 align-self-end">{% block botao_submit %}Salvar{% endblock %}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

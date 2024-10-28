@@ -1,0 +1,30 @@
+{% extends 'Bases/base-list.html' %}
+
+{% block url_regist %}{% url 'CreateCidade' %}{% endblock %}
+{% block 'tipo_listagem' %}Cidade{% endblock %}
+
+{% block colunas %}
+    <th scope="col">Nº</th>
+    <th scope="col">Nome</th>
+    <th scope="col">UF</th>
+    <th scope="col">Opções</th>
+{% endblock %}
+
+{% block tratam_dados %}
+    {% for cidade in cidades %}
+        <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ cidade.nome }}</td>
+            <td>{{ cidade.uf }}</td>
+            <td>
+                <a href="{% url 'EditCidade' cidade.pk %}" class="btn btn-warning" title="Editar">
+                    <i class="fa-solid fa-pencil"></i></a>
+                
+                <a href="{% url 'DeleteCidade' cidade.pk %}" class="btn btn-danger" title="Excluir">
+                    <i class="fa-solid fa-trash"></i></a>
+            </td>
+        </tr>
+    {% empty %}
+        <td><li class="text-danger">Nenhum registro encontrado.</li></td>
+    {% endfor %}
+{% endblock %}
