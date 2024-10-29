@@ -1,15 +1,15 @@
 {% extends 'Bases/base-global-c-header.html' %}
 
-{% block 'titulo' %}
+{% block titulo %}
     Listagem
 {% endblock %}
 
-{% block 'body' %}
+{% block body %}
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 col-lg-8 mx-auto p-3 d-flex flex-column">
                 {% block btn_add %}<a href="{% block url_regist %}{% endblock %}" class="btn btn-primary align-self-end me-3 mt-3"><i class="fa-solid fa-plus me-2"></i>Novo</a>{% endblock %}
-                <p class="h4 mt-5">Listando {% block 'tipo_listagem' %}{% endblock %}</p>
+                <p class="h4 mt-5">Listando {% block tipo_listagem %}{% endblock %}</p>
 
                 <table class="table table-sm table-striped table-hover">
                     <thead>
