@@ -40,6 +40,7 @@ Um projeto Django é dividido em:
 
 Um módulo deve conter arquivos e esses carregam diversas funções. Seguem tabelas explicando:
 - Módulo obrigatório
+
 | Nome arquivo | É obrigatório? | Função |
 | :------------: | :-------------- | :------ |
 | `__init__.py` | Sim | Identificar um módulo Python. |
@@ -47,7 +48,9 @@ Um módulo deve conter arquivos e esses carregam diversas funções. Seguem tabe
 | `urls.py` | Sim | Interliga os arquivos `urls.py` de cada módulo complementar. |
 | `asgi.py` | Sim | Necessário quando você deseja implementar funcionalidades assíncronas em seu projeto Django, como chat em tempo real ou notificações via WebSocket. |
 | `wsgi.py` | Sim | É utilizado quando você está implantando seu projeto Django em servidores que seguem o padrão WSGI. |
+
 - Módulos complementares
+
 | Nome arquivo | É obrigatório? | Função |
 | :------------: | :-------------- | :------ |
 | `__init__.py` | Sim | Identificar um módulo Python. |
