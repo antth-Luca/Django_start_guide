@@ -54,12 +54,12 @@ Um módulo deve conter arquivos e esses carregam diversas funções. Seguem tabe
 | Nome arquivo | É obrigatório? | Função |
 | :------------: | :-------------- | :------ |
 | `__init__.py` | Sim | Identificar um módulo Python. |
-| `admin.py` | Não | Registrar os models no painel de administrador do Django. |
 | `apps.py` | Sim | Identifica um módulo Django. |
+| `admin.py` | Não | Registrar os models no painel de administrador do Django. |
 | `models.py` | Não | Guarda as classes de model (representações das entidades no banco de dados). |
-| `urls.py` | Não | Guarda as urls/rotas do módulo complementar, apontando para uma view específica. |
 | `forms.py` | Não | Guarda as classes de formulário (automação de formulário para os HTML’s). |
 | `views.py` | Não | Faz todo o processo, ele manipula dados e renderiza templates. |
+| `urls.py` | Não | Guarda as urls/rotas do módulo complementar, apontando para uma view específica. |
 | `tests.py` | Não | Usado para executar testes. |
 
 ## Preparando o ambiente
