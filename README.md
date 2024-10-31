@@ -17,8 +17,8 @@ Há muito tempo, eu tinha uma ideia de projeto para a WEB, mas eu só sabia Pyth
 Django é amplamente usado no meio profissional para desenvolver aplicações web robustas e escaláveis. Ele é especialmente popular em empresas que valorizam rapidez no desenvolvimento, segurança e uma estrutura "baterias incluídas" que oferece muitos recursos prontos para uso.
 
 ### 1.3 - Mas afinal, o que é Django?
-Django é um framework front-end e back-end desenvolvido para Python. Você cuida do fornt e do back em apenas um projeto, levando-os juntos!
-O Django tem muitos pontos fortes, por exemplo: segurança, escalabilidade, integração com diversos bancos de dados, rico ecossistema de bibliotecas, ótima comunidade ([Visite-nos!](https://www.djangoproject.com/community/)) e ainda incentiva boas práticas de codificação. Além de quê, um dos lemas do Django é "baterias inclusas", portanto ele tem muitos recursos prontos para usar que aceleram o desenvolvimento. Exemplos:
+Django é um framework front-end e back-end desenvolvido para Python. Você cuida do front e do back em apenas um projeto, levando-os juntos!
+O Django tem muitos pontos fortes, por exemplo: segurança, escalabilidade, integração com diversos bancos de dados, rica quantidade de bibliotecas, ótima comunidade ([Visite-nos!](https://www.djangoproject.com/community/)) e ainda incentiva boas práticas de codificação. Além de quê, um dos lemas do Django é "baterias inclusas", portanto ele tem muitos recursos prontos para usar que aceleram o desenvolvimento. Exemplos:
 - Internacionalização e localização;
 - Autenticação (login/logout);
 - Funções CRUD prontas;
@@ -40,9 +40,9 @@ Diferentemente de outros frameworks comuns, o Django usa o modelo MTV (Model - T
 ---
 
 Um projeto Django é dividido em:
-- Módulo obrigatório: de mesmo nome do projeto, por padrão;
-- Módulos internos: não visíveis, mas importantes para o funcionamento;
-- Módulos complementares: criados pelos devs. Podem representar bancos, entidades ou funções, conforme a preferência do dev e nenhuma abordagem está errada.
+- **Módulo obrigatório**: de mesmo nome do projeto, por padrão;
+- **Módulos internos**: não visíveis, mas importantes para o funcionamento. Por exemplo: `admin`, `auth`, `contenttypes` e `sessions`;
+- **Módulos complementares**: criados pelos devs. Podem representar bancos, entidades ou funções, conforme a preferência do dev e nenhuma abordagem está errada.
 
 Um módulo deve conter arquivos e esses carregam diversas funções. Seguem tabelas explicando:
 - Módulo obrigatório
@@ -74,73 +74,85 @@ Nós precisaremos de algumas ferramentas:
 - IDE para banco de dados SQLite (recomendo [DB Browser](https://sqlitebrowser.org/) por ser simples e cumprir muito bem sua função, mas eu recomendo também por EU estar mais acostumado com a ferramenta rsrs);
 - Um navegador, pode ser qualquer um (não vou expor a minha preferência, pois costuma dar briga rsrs);
 - Obviamente, precisaremos do Python (eu utilizei o Python 3.11.9, mas instale a versão que você quiser e sempre do [site oficial do Python](https://www.python.org/downloads/);
-*OBS:* Se o Python, o PIP ou uma biblioteca Python não forem reconhecidos no Windows, muito provavelmente o erro estará no PATH do Windows. Verifique se o caminho do interpretador Python e da pasta "Scripts", que são as bibliotecas, estejam adicionadas ao PATH.
+
+**OBS:** Se o Python, o PIP ou uma biblioteca Python não forem reconhecidos no Windows, muito provavelmente o erro estará no PATH do Windows. Verifique se o caminho do interpretador Python e da pasta "Scripts" estejam adicionadas ao PATH nas variáveis de ambiente:
+```text
+# Variável de ambiente "Path"
+
+C:\Users\<seu_user>\AppData\Local\Programs\Python\Python<versão>\
+C:\Users\<seu_user>\AppData\Local\Programs\Python\Python<versão>\Scripts\
+```
 ***
 
 Ótimo! Agora vamos organizar e só então, vamos ao Django. No seu terminal:
 - Instale a biblioteca Virtualenv. Use:
-cmd
+```cmd
 pip install virtualenv
-
+```
 - Instale, também, a biblioteca Virtualenvwrapper. Para quem estiver no Windows, use:
-cmd
+```cmd
 pip install virtualenvwrapper-win
-
+```
 - Agora crie um VENV: Tendo o Virtualenvwrapper, use:
-cmd
+```cmd
 mkvirtualenv <nome_do_seu_venv>
-
-*OBS:* Um venv, ou virtual environment (ambiente virtual, em tradução livre) é como uma "caixa" isolada que você cria no seu computador para trabalhar em um projeto Python. Dentro dessa caixa, você pode instalar versões específicas de bibliotecas e pacotes sem interferir com outros projetos ou com as configurações globais do seu sistema. Vantagens: isolamento, versões específicas para cada projeto e facilidade no gerenciamento.
+```
+**OBS:** Um venv, ou virtual environment (ambiente virtual, em tradução livre) é como uma "caixa" isolada que você cria no seu computador para trabalhar em um projeto Python. Dentro dessa caixa, você pode instalar versões específicas de bibliotecas e pacotes sem interferir com outros projetos ou com as configurações globais do seu sistema. Vantagens: isolamento, versões específicas para cada projeto e facilidade no gerenciamento.
 - Após a criação com sucesso, o venv já deve estar ativo. Dessa forma:
-cmd
-(<nome_do_seu_venv>) C:\seu\diretorio> |
+```cmd
+(<nome_do_seu_venv>) C:\seu\diretorio>
+```
+**Dica:** O Virtualenvwrapper tem comandos que facilitam a manipulação dos venvs. São alguns deles:
 
-*Dica:* O Virtualenvwrapper tem comandos que facilitam a manipulação dos venvs. São alguns deles:
-text
-"mkvirtualenv <nome_do_seu_venv>" - Cria um venv;
-"rmvirtualenv <nome_do_seu_venv>" - Exclui um venv;
-"workon <nome_do_seu_venv>" - Ativa um venv;
-"deactivate" - Desativa um venv.
+> - "mkvirtualenv <nome_do_seu_venv>" - Cria um venv;
+
+> - "rmvirtualenv <nome_do_seu_venv>" - Exclui um venv;
+
+> - "workon <nome_do_seu_venv>" - Ativa um venv;
+
+> - "deactivate" - Desativa um venv.
 
 - Com o VENV ativo, instale o Django. Use:
-cmd
+```cmd
 pip install django
-
-*OBS:* Neste projeto foi utilizada a versão 5.1.2. Para instalar esta exata versão: pip install django==5.1.2.
+```
+**OBS:** Neste projeto foi utilizada a versão 5.1.2. Para instalar esta exata versão: pip install django==5.1.2.
 
 ## 3. Iniciando um projeto Django
 Navegue até o diretório que você deseja iniciar seu projeto Django. No command prompt se comandos como:
-- cd <nome_pasta> - Escolhe um diretório;
-- cd .. - Volta um diretório;
-- cd \ - Volta todo o diretório até a raiz (o C:).
+- `cd <nome_pasta>` - Escolhe um diretório;
+- `cd ..` - Volta um diretório;
+- `cd \` - Volta todo o diretório até a raiz (o C:).
 
 E finalmente, Django!
 - Com o VENV ativo, crie um projeto Django. Use:
-cmd
+```cmd
 django-admin startproject <nome_do_seu_projeto>
-
+```
 - Com VENV ativo e dentro do diretório do seu projeto Django, inicie o servidor do Django para testarmos. Use:
-cmd
+```cmd
 python manage.py runserver
+```
+- Abra seu navegador de preferência e acesse a URL `localhost:8000`. Deve aparecer uma tela de boas vindas do Django e isto signfica que está tudo certo!
 
-- Abra seu navegador de preferência e acesse a URL localhost:8000. Deve aparecer uma tela de boas vindas do Django e isto signfica que está tudo certo!
+![Boas vindas do Django](https://github.com/antth-Luca/Django_start_guide/blob/main/images/django/boas-vindas.png)
 
 ## 4. Primeiras configurações dentro do Django
-Abra o settings.py que está dentro do módulo obrigatório e adicione a importação import os. Vamos configurar!
+Abra o `settings.py` que está dentro do módulo obrigatório e adicione a importação `import os`. Vamos configurar!
 
 ### 4.1 - Local e hora
-  Desça e encontre as duas configurações LANGUAGE_CODE e TIME_ZONE e altera os valores:
-python
+  Desça e encontre as duas configurações `LANGUAGE_CODE` e `TIME_ZONE` e altera os valores:
+```python
 # <módulo_obrigatório> > settings.py
 
 LANGUAGE_CODE = 'pt-br'
 
 TIME_ZONE = 'America/Sao_Paulo'
-
+```
 
 ### 4.2 - Templates
-Ainda dentro do settings.py, encontre a configuração TEMPLATES e adicione:
-python
+Ainda dentro do `settings.py`, encontre a configuração `TEMPLATES` e adicione:
+```python
 # <módulo_obrigatório> > settings.py
 
 TEMPLATES = [
@@ -150,34 +162,34 @@ TEMPLATES = [
         <...>  # Existem outras definições abaixo. Não altere!
     }
 ]
-
+```
 
 ### 4.3 - Arquivos estáticos (CSS, JS e imagens)
-Também dentro do settings.py, encontre STATIC para alterar e adicionar:
-python
+Também dentro do `settings.py`, encontre `STATIC` para alterar e adicionar:
+```python
 # <módulo_obrigatório> > settings.py
 
 STATIC_URL = '/static/'  # Adicione uma barra aqui!
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')  # Adicione esta linha!
 ]
-
+```
 
 ### 4.4 - Estilos prontos (Crispy Forms)
 Você sabia que existem bibliotecas Python que interagem com o Django e trazem muitos estilos prontos?!
-Eu conhece e lhe apresentarei o Django Crispy Forms. Esta biblioteca aplica estilos a formulários. Vamos aplicar:
+Eu conheço e lhe apresentarei o **Django Crispy Forms**. Esta biblioteca aplica estilos a formulários. Vamos prepará-la:
 - Abra o terminal;
 - Verifique que o VENV esteja ativo;
 - Instale o Django Crispy Forms. Use:
-cmd
+```cmd
 pip install django-crispy-forms
-
+```
 - Instale o Crispy Bootstrap 5. Use:
-cmd
+```cmd
 pip install crispy-bootstrap5
-
+```
 - Adicione as bibliotecas ao projeto Django. Abra o settings.py, encontre a constante INSTALLED_APPS e adicione as linhas:
-python
+```python
 # <módulo_obrigatório> > settings.py
 
 INSTALLED_APPS = [
@@ -185,36 +197,36 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
 ]
-
-- Configure o Bootstrap do Crispy. Adicione a seguinte constante ao settings.py, logo abaixo de INSTALLED_APPS:
-python
+```
+- Configure o Bootstrap do Crispy. Adicione a seguinte constante ao `settings.py`, logo abaixo de INSTALLED_APPS:
+```python
 # <módulo_obrigatório> > settings.py
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
-
-Agora, para utilizar, basta adicionar a tag {% load crispy_forms_tags %} em uma das primeiras linhas de um template e renderizar o formulário com {{ form|crispy }}. Você poderá ver os campos com tamanho e espaçamento definido, todo um estilo pronto!
+```
+Agora, para utilizar, basta adicionar a tag `{% load crispy_forms_tags %}` em uma das primeiras linhas de um template e renderizar o formulário com `{{ form|crispy }}`. Você poderá ver os campos com tamanho e espaçamento definido, todo um estilo pronto!
 Você ainda pode combinar o Crispy com o Bootstrap e acelerar o desenvolvimento.
 
 ## 5. Desenvolvimento Django
 ### 5.1 - Metodologia para as view
-Antes de tudo, precisamos definir se utilizaremos views baseadas em funções ou classes.
+Antes de tudo, precisamos definir se utilizaremos views baseadas em _funções_ ou _classes_.
 
-Quando optamos por *funções*, precisamos programar toda a manipulação de método HTTP e retorno de resposta e outros, mas temos mais liberdade.
+Quando optamos por **funções**, precisamos programar toda a manipulação de método HTTP e retorno de resposta e outros, mas temos mais liberdade.
 
-Quando se opta por *classes*, o código diminui drasticamente, pois já está programado, basta utilizarmos. 
+Quando se opta por **classes**, o código diminui drasticamente, pois já está programado, basta utilizarmos. 
 
-*OBS:* Neste projeto, usaremos classes, porque não precisamos reinventar a roda e somos iniciantes, né?
+**OBS:** Neste projeto, usaremos classes, porque não precisamos reinventar a roda e somos iniciantes, né?
 
 ### 5.2 - Primeiro módulo
 Para continuarmos nossa jornada, vamos criar um módulo complementar. Para isso, abra o terminal com o VENV ativo e dentro do diretório do projeto Django e use:
-cmd
+```cmd
 python manage.py startapp <nome_do_seu_módulo>
-
+```
 O Django exige que registremos os novos módulos. Para isso:
-- Abra o settings.py;
-- Encontre INSTALLED_APPS;
+- Abra o `settings.py`;
+- Encontre `INSTALLED_APPS`;
 - Adicione a linha:
-python
+```python
 # <módulo_obrigatório> > settings.py
 
 INSTALLED_APPS = [
@@ -225,19 +237,19 @@ INSTALLED_APPS = [
     # Adicione a seguinte linha:
     '<nome_do_seu_módulo>.apps.<nome_do_seu_módulo>Config',
 ]
+```
 
-
-*OBS:* Se haverá rotas/URLs no seu módulo, faça:
-- Dentro do módulo recém-criado, crie um arquivo urls.py:
-python
+**OBS:** Se haverá rotas/URLs no seu módulo, faça:
+- Dentro do módulo recém-criado, crie um arquivo `urls.py`:
+```python
 # <nome_do_seu_módulo> > urls.py
 
 from django.urls import path
 
 urlpatterns = []
-
-- Dentro do urls.py do módulo obrigatório, adicione a importação e inclua as URLs do módulo complementar:
-python
+```
+- Dentro do `urls.py` do módulo obrigatório, adicione a importação e inclua as URLs do módulo complementar:
+```python
 # <módulo_obrigatório> > urls.py
 
 from django.contrib import admin
@@ -248,23 +260,23 @@ urlpatterns = [
     # Inclua as urls do módulo:
     path('', include('<nome_do_seu_módulo>.urls')),
 ]
-
+```
 
 ### 5.3 - Criando uma view simples
 Vamos criar nossa primeira view! Uma view com o clássico texto "Olá, mundo!":
 - Abra seu módulo complementar;
-- Procure o arquivo views.py;
+- Procure o arquivo `views.py`;
 - Adicione a importação e crie a view:
-python
+```python
 # <nome_do_seu_módulo> > views.py
 
 from django.views.generic import TemplateView
 
 class HomeView(TemplateView):
     template_name = '<nome_do_seu_módulo>/home.html'
-
-- Vá até o arquivo urls.py e adicione a importação e a URL:
-python
+```
+- Vá até o arquivo `urls.py` e adicione a importação e a URL:
+```python
 # <nome_do_seu_módulo> > urls.py
 
 from django.urls import path
@@ -273,25 +285,25 @@ from .views import HomeView
 urlpatterns = [
     path('home', HomeView.as_view(), name='Home'),
 ]
-
-- Crie o diretório: <seu_projeto>\<nome_do_seu_módulo>\templates\<nome_do_seu_módulo>;
-- Dentro deste, crie o template HTML home.html com uma tag *h1* com a mensagem:
-html
+```
+- Crie o diretório: `<seu_projeto>\<nome_do_seu_módulo>\templates\<nome_do_seu_módulo>`;
+- Dentro deste, crie o template HTML `home.html` com uma tag **h1** com a mensagem:
+```html
 <h1>Olá, mundo!</h1>
-
+```
 - Inicie o servidor do Django. Use:
-cmd
+```cmd
 python manage.py runserver
-
-- Acesse localhost:8000/home. Você deve ver uma página branca com a mensagem e isso quer dizer que funcionou. Você criou sua primeira view, parabéns!
+```
+- Acesse [`localhost:8000/home`](http://localhost:8000/home). Você deve ver uma página branca com a mensagem e isso quer dizer que funcionou. Você criou sua primeira view, parabéns!
 
 ### 5.4 - Criando uma view de criação
 Agora criaremos uma view um pouco além. Ela não apenas mostrará um texto, agora vamos mexer com o banco de dados e fazer registros nele. Faça:
 - Crie um módulo com o nome Cidade;
-- Registre o módulo no settings.py;
+- Registre o módulo no `settings.py`;
 - Inclua as URLs do novo módulo;
-- Dentro de models.py modele a entidade de cidade:
-python
+- Dentro de `models.py` modele a entidade de cidade:
+```python
 # Cidade > models.py
 
 from django.db import models
@@ -302,19 +314,19 @@ class Cidade(models.Model):
 
     def __str__(self):
         return f'{self.nome} - {self.uf}'
-
-*OBS:* Não, não estou usando as melhores práticas de modelagem, mas... Dá um desconto, é só um exemplo!
+```
+**OBS:** Não, não estou usando as melhores práticas de modelagem, mas... Dá um desconto, é só um exemplo!
 
 #### -( Migrações Django )-
 Preciso interromper aqui para lhe dizer que o Django tem um ORM (Object Relational Mapper - Mapeamento objeto-relacional) e já trata das criações de tabela no banco de dados, mas para isso, precisamos solicitar que ele realize as migrações. Use:
-- python manage.py makemigrations - Para criar as migrações;
-- python manage.py migrate - Para aplicar as migrações no banco.
+- `python manage.py makemigrations` - Para criar as migrações;
+- `python manage.py migrate` - Para aplicar as migrações no banco.
 Tudo pronto para continuar!
 
 #### ...Prosseguindo com a view de criação:
 
 - Vamos construir a view. Em views.py faça:
-python
+```python
 # Cidade > views.py
 
 from django.views.generic import CreateView
@@ -326,9 +338,9 @@ class CreateCidadeView(CreateView):
     fields = '__all__'
     template_name = 'Cidade/create-cidade.html'
     success_url = reverse_lazy('Home')
-
-- Crie o arquivo urls.py:
-python
+```
+- Crie o arquivo `urls.py`:
+```python
 # Cidade > urls.py
 
 from django.urls import path
@@ -337,10 +349,10 @@ from .views import CreateCidadeView
 urlpatterns = [
     path('criar-cidade', CreateCidadeView.as_view(), name='CreateCidade'),
 ]
-
-- Dentro do seu projeto Django, crie o diretório <projeto_django>\templates\Bases;
-- Dentro de Bases, crie o template base-global.html:
-html
+```
+- Dentro do seu projeto Django, crie o diretório `<projeto_django>\templates\Bases`;
+- Dentro de Bases, crie o template `base-global.html`:
+```html
 {% load static %}
 
 <!DOCTYPE html>
@@ -359,9 +371,9 @@ html
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
-- Também dentro de Bases, crie o base-navbar.html`:
-html
+```
+- Também dentro de Bases, crie o `base-navbar.html`:
+```html
 {% extends 'Bases/base-global.html' %}
 
 {% block body %}
@@ -388,9 +400,9 @@ html
         {% endblock %}
     </main>
 {% endblock %}
-
-- Ainda dentro de Bases, crie base-create.html:
-html
+```
+- Ainda dentro de Bases, crie `base-create.html`:
+```html
 {% extends 'Bases/base-global.html' %}
 {% load crispy_forms_tags %}
 
@@ -420,34 +432,34 @@ html
         </div>
     </div>
 {% endblock %}
-
-*OBS:* Este template está usando *Django Crispy Forms*. Caso não tenha instalado, volte para [instalar Crispy Forms](#estilos-prontos)!
-- Agora, dentro do seu módulo Cidade, crie o diretório <módulo_Cidade>\templates\Cidade;
-- E dentro dele, adicione um create-cidade.html:
-html
+```
+**OBS:** Este template está usando *Django Crispy Forms*. Caso não tenha instalado, volte para [instalar Crispy Forms](#estilos-prontos)!
+- Agora, dentro do seu módulo Cidade, crie o diretório `<módulo_Cidade>\templates\Cidade`;
+- E dentro dele, adicione um `create-cidade.html`:
+```html
 {% extends 'Bases/base-create.html' %}
 
 {% block tipo_cadastro %}Cidade{% endblock %}
-
-- Inicie o servidor com o comando python manage.py runserver e acesse no navegador [localhost:8000/criar-cidade](http://localhost:8000/criar-cidade);
+```
+- Inicie o servidor com o comando `python manage.py runserver` e acesse no navegador [`localhost:8000/criar-cidade`](http://localhost:8000/criar-cidade);
 - Você deve ver um lindo formulário para cadastrar uma cidade e isso significa que está tudo certo!
 - Preencha os campos e clique no botão Salvar;
-- Abra o *DB Browser*:
+- Abra o **DB Browser**:
 
 ![DB Browser após aberto](https://github.com/antth-Luca/Django_start_guide/blob/main/images/db-browser/interface-inicial.png)
-- Clique em *arquivo* no canto superior esquerdo da tela. Depois *Abrir banco de dados somente leitura* e escolha o arquivo <projeto_django>\db.sqlite:
+- Clique em **arquivo** no canto superior esquerdo da tela. Depois **Abrir banco de dados somente leitura** e escolha o arquivo `<projeto_django>\db.sqlite`:
 
 ![Opções de arquivo no DB Browser](https://github.com/antth-Luca/Django_start_guide/blob/main/images/db-browser/opcoes-arquivo.png)
 
-- Você poderá encontrar uma tabela chamada de Cidade_cidade. Este é um padrão do Django: "<nome_do_módulo>_<nome_do_model>";
-- Se você clicar com o botão direito em cima da tabela e usar a opção *Navegar tabela*, poderá ver a cidade que acabou de cadastrar lá no sistema e isso quer dizer que funciona!
+- Você poderá encontrar uma tabela chamada de `Cidade_cidade`. Este é um padrão do Django: "`<nome_do_módulo>_<nome_do_model>`";
+- Se você clicar com o botão direito em cima da tabela e usar a opção **Navegar tabela**, poderá ver a cidade que acabou de cadastrar lá no sistema e isso quer dizer que funciona!
 
 ### 5.5 - Criando uma view de listagem
 Bem, ficar vendo os registros diretamente no banco não é viável quando se pensa nos usuários, certo?
 
 Então vamos construir uma view de listagem:
-- Primeiramente, em views.py adicione a importação e crie a view de listagem:
-python
+- Primeiramente, em `views.py` adicione a importação e crie a view de listagem:
+```python
 # Cidade > views.py
 
 from django.views.generic import CreateView, ListView  # Adicione a importação de 'ListView'!
@@ -467,9 +479,9 @@ class CreateCidadeView(CreateView):
     fields = '__all__'
     template_name = 'Cidade/create-cidade.html'
     success_url = reverse_lazy('Home')
-
-- Em urls.py, registre a URL:
-python
+```
+- Em `urls.py`, registre a URL:
+```python
 # Cidade > urls.py
 
 from django.urls import path
@@ -479,9 +491,9 @@ urlpatterns = [
     path('criar-cidade', CreateCidadeView.as_view(), name='CreateCidade'),
     path('lista-cidade', ListCidadeView.as_view(), name='ListCidade'),  # Adicione a URL!
 ]
-
-- Vamos tratar os templates! Crie uma base com navbar base-navbar.html dentro de <projeto_django>\templates\Bases:
-html
+```
+- Vamos tratar os templates! Crie uma base com navbar `base-navbar.html` dentro de `<projeto_django>\templates\Bases`:
+```html
 {% extends 'Bases/base-global.html' %}
 
 {% block body %}
@@ -508,9 +520,9 @@ html
         {% endblock %}
     </main>
 {% endblock %}
-
-- Agora crie uma base de listagens base-list.html dentro de <projeto_django>\templates\Bases:
-html
+```
+- Agora crie uma base de listagens `base-list.html` dentro de `<projeto_django>\templates\Bases`:
+```html
 {% extends 'Bases/base-navbar.html' %}
 
 {% block titulo %}
@@ -538,9 +550,9 @@ html
         </div>
     </div>
 {% endblock %}
-
-- Agora dentro de <módulo_Cidade>\templates\Cidade, crie o list-cidade.html:
-html
+```
+- Agora dentro de `<módulo_Cidade>\templates\Cidade`, crie o `list-cidade.html`:
+```html
 {% extends 'Bases/base-list.html' %}
 
 {% block url_regist %}{% url 'CreateCidade' %}{% endblock %}
@@ -571,11 +583,11 @@ html
         <td><li class="text-danger">Nenhum registro encontrado.</li></td>
     {% endfor %}
 {% endblock %}
-
+```
 #### -( Página Home 2.0 )-
 Antes de testarmos a listagem de cidade, vamos refazer a página Home:
-- Substitua o conteúdo de home.html por:
-html
+- Substitua o conteúdo de `home.html` por:
+```html
 {% extends 'Bases/base-navbar.html' %}
 
 {% block titulo %}
@@ -596,17 +608,17 @@ html
         </div>
     </div>
 {% endblock %}
-
+```
 
 #### ...E vamos ao teste da listagem:
-- Inicie o servidor do Django e acesse [localhost:8000/home](http://localhost:8000/home);
-- Clique em Cidades, se uma lista com as cidades abrir, é porque funcionou!
-*OBS:* O botão de adicionar na lista, também deve funcionar!
+- Inicie o servidor do Django e acesse [`localhost:8000/home`](http://localhost:8000/home);
+- Clique em _Cidades_, se uma lista com as cidades abrir, é porque funcionou!
+**OBS:** O botão de adicionar na lista, também já deve funcionar!
 
 ### 5.6 - Criando uma view de edição
 E vamos fazer a edição!
 - Adicione a importação e crie a view:
-python
+```python
 # Cidade > views.py
 
 from django.views.generic.edit import UpdateView
@@ -616,9 +628,9 @@ class EditCidadeView(UpdateView):
     fields = '__all__'
     template_name = 'Cidade/edit-cidade.html'
     success_url = reverse_lazy('ListCidade')
-
+```
 - Registre a URL:
-python
+```python
 # Cidade > urls.py
 
 from django.urls import path
@@ -629,9 +641,9 @@ urlpatterns = [
     path('lista-cidade', ListCidadeView.as_view(), name='ListCidade'),
     path('edit-cidade/<int:pk>', EditCidadeView.as_view(), name='EditCidade'),  # Adicione a URL!
 ]
-
-- Crie o template <projeto_django>\templates\Bases\base-edit.html:
-html
+```
+- Crie o template `<projeto_django>\templates\Bases\base-edit.html`:
+```html
 {% extends 'Bases/base-global.html' %}
 {% load crispy_forms_tags %}
 
@@ -661,15 +673,15 @@ html
         </div>
     </div>
 {% endblock %}
-
-- E crie o template filho Cidade\templates\Cidade\edit-cidade.html:
-html
+```
+- E crie o template filho `Cidade\templates\Cidade\edit-cidade.html`:
+```html
 {% extends 'Bases/base-edit.html' %}
 
 {% block tipo_edit %}Cidade{% endblock %}
-
-- Adicione {% url 'EditCidade cidade.pk %} ao href da tag *a* de edição do list-cidade.html. Por exemplo:
-html
+```
+- Adicione `{% url 'EditCidade cidade.pk %}` ao href da tag **a** de edição do `list-cidade.html`. Por exemplo:
+```html
 <...>
 {% block tratam_dados %}
     {% for cidade in cidades %}
@@ -681,14 +693,14 @@ html
                 <a href="{% url 'EditCidade' cidade.pk %}" class="btn btn-warning" title="Editar">
                     <i class="fa-solid fa-pencil"></i></a>
 <...>
-
-- Inicie o servidor do Django e acesse [localhost:8000/list-cidade](http://localhost:8000/list-cidade);
+```
+- Inicie o servidor do Django e acesse [`localhost:8000/list-cidade`](http://localhost:8000/list-cidade);
 - Agora o botão de editar um registro estará funcionando!
 
 ### 5.7 - Criando uma view de deleção
 Agora, a última função CRUD... Vamos fazer a view de deleção:
 - Adicione a importa e view:
-python
+```python
 # Cidade > views.py
 
 from django.views.generic.edit import UpdateView, DeleteView
@@ -697,9 +709,9 @@ class DeleteCidadeView(DeleteView):
     model = Cidade
     template_name = 'Cidade/delete-cidade.html'
     success_url = reverse_lazy('ListCidade')
-
+```
 - Registre a URL:
-python
+```python
 # Cidade > urls.py
 
 from django.urls import path
@@ -711,9 +723,9 @@ urlpatterns = [
     path('edit-cidade/<int:pk>', EditCidadeView.as_view(), name='EditCidade'),
     path('delete-cidade/<int:pk>', DeleteCidadeView.as_view(), name='DeleteCidade'),  # Adicione a URL!
 ]
-
-- Crie o template base base-delete.html:
-html
+```
+- Crie o template base `base-delete.html`:
+```html
 {% extends 'Bases/base-global.html' %}
 
 {% block body %}
@@ -734,15 +746,15 @@ html
         </div>
     </main>
 {% endblock %}
-
-- E crie o template filho delete-cidade.html:
-html
+```
+- E crie o template filho `delete-cidade.html`:
+```html
 {% extends 'Bases/base-delete.html' %}
 
 {% block url_cancelamento %}{% url 'ListCidade' %}{% endblock %}
-
-- Adicione {% url 'DeleteCidade' cidade.pk %} ao href da tag *a* de deleção do list-cidade.html. Por exemplo:
-html
+```
+- Adicione `{% url 'DeleteCidade' cidade.pk %}` ao href da tag **a** de deleção do `list-cidade.html`. Por exemplo:
+```html
 <...>
                 <a href="{% url 'DeleteCidade' cidade.pk %}" class="btn btn-danger" title="Excluir">
                     <i class="fa-solid fa-trash"></i></a>
@@ -752,8 +764,8 @@ html
         <td><li class="text-danger">Nenhum registro encontrado.</li></td>
     {% endfor %}
 {% endblock %}
-
-- Inicie o servidor do Django e acesse [localhost:8000/list-cidade](http://localhost:8000/list-cidade);
+```
+- Inicie o servidor do Django e acesse [`localhost:8000/list-cidade`](http://localhost:8000/list-cidade);
 - Agora o botão de deleção um registro estará funcionando!
 
 ### 5.8 - Criando o módulo de Cliente
@@ -761,7 +773,7 @@ html
 > Aqui fica um desafio, façam a criação, listagem, edição e deleção para a entidade *Clientes*. Não precisa recriar os templates base, apenas faça as heranças!
 
 Vou deixar pelo menos o model de Cliente aqui:
-python
+```python
 # Clientes > models.py
 
 from django.db import models
@@ -774,9 +786,9 @@ class Cliente(models.Model):
 
     def __str__(self):
         return f'{self.nome}'
+```
 
-
-### 5.9 - Painel administrador do Django
+### 5.9 - Painel administrativo do Django
 
 ### 5.10 - Autenticação
 
