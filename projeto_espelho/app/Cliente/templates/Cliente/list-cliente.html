@@ -18,10 +18,10 @@
             <td>{{ cliente.cidade }}</td>
             <td>
                 <a href="{% url 'EditCliente' cliente.pk %}" class="btn btn-warning" title="Editar">
-                    <i class="fa-solid fa-pencil"></i></a>
+                    <i class="bi bi-pencil-fill"></i></a>
 
                 <a href="{% url 'DeleteCliente' cliente.pk %}" class="btn btn-danger" title="Excluir">
-                    <i class="fa-solid fa-trash"></i></a>
+                    <i class="bi bi-trash"></i></a>
             </td>
         </tr>
     {% empty %}

@@ -388,7 +388,7 @@ urlpatterns = [
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <a class="navbar-brand" href="{% url 'Home' %}">
-                <i class="fa-brands fa-python me-2"></i>Meu app Django
+                <i class="bi bi-building me-2"></i>Meu app Django
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -396,7 +396,7 @@ urlpatterns = [
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center" href="#"><i class="fa-solid fa-circle-user me-2" style="font-size: 32px;"></i>Olá, {{ user.username }}!</a>
+                        <a class="nav-link d-flex align-items-center" href="#"><i class="bi bi-person-circle me-2" style="font-size: 32px;"></i></i>Olá, {{ user.username }}!</a>
                     </li>
                 </ul>
             </div>
@@ -501,35 +501,6 @@ urlpatterns = [
     path('lista-cidade', ListCidadeView.as_view(), name='ListCidade'),  # Adicione a URL!
 ]
 ```
-- Vamos tratar os templates! Crie uma base com navbar `base-navbar.html` dentro de `<projeto_django>\templates\Bases`:
-```html
-{% extends 'Bases/base-global.html' %}
-
-{% block body %}
-    <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'Home' %}">
-                <i class="fa-brands fa-python me-2"></i>Meu app Django
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center" href="#"><i class="fa-solid fa-circle-user me-2" style="font-size: 32px;"></i>Olá, {{ user.username }}!</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <main>
-        {% block main %}
-        {% endblock %}
-    </main>
-{% endblock %}
-```
 - Agora crie uma base de listagens `base-list.html` dentro de `<projeto_django>\templates\Bases`:
 ```html
 {% extends 'Bases/base-navbar.html' %}
@@ -542,7 +513,7 @@ urlpatterns = [
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 col-lg-8 mx-auto p-3 d-flex flex-column">
-                {% block btn_add %}<a href="{% block url_regist %}{% endblock %}" class="btn btn-primary align-self-end me-3 mt-3"><i class="fa-solid fa-plus me-2"></i>Novo</a>{% endblock %}
+                {% block btn_add %}<a href="{% block url_regist %}{% endblock %}" class="btn btn-primary align-self-end me-3 mt-3"><i class="bi bi-plus" me-2></i>Novo</a>{% endblock %}
                 <p class="h4 mt-5">Listando {% block tipo_listagem %}{% endblock %}</p>
 
                 <table class="table table-sm table-striped table-hover">
@@ -582,10 +553,10 @@ urlpatterns = [
             <td>{{ cidade.uf }}</td>
             <td>
                 <a href="#" class="btn btn-warning" title="Editar">
-                    <i class="fa-solid fa-pencil"></i></a>
+                    <i class="bi bi-pencil-fill"></i></a>
                 
                 <a href="#" class="btn btn-danger" title="Excluir">
-                    <i class="fa-solid fa-trash"></i></a>
+                    <i class="bi bi-trash"></i></a>
             </td>
         </tr>
     {% empty %}
@@ -702,7 +673,7 @@ urlpatterns = [
             <td>{{ cidade.uf }}</td>
             <td>
                 <a href="{% url 'EditCidade' cidade.pk %}" class="btn btn-warning" title="Editar">
-                    <i class="fa-solid fa-pencil"></i></a>
+                    <i class="bi bi-pencil-fill"></i></a>
 <...>
 ```
 - Inicie o servidor do Django e acesse [`localhost:8000/list-cidade`](http://localhost:8000/list-cidade);
@@ -768,7 +739,7 @@ urlpatterns = [
 ```html
 <...>
                 <a href="{% url 'DeleteCidade' cidade.pk %}" class="btn btn-danger" title="Excluir">
-                    <i class="fa-solid fa-trash"></i></a>
+                    <i class="bi bi-trash"></i></a>
             </td>
         </tr>
     {% empty %}
