@@ -75,13 +75,14 @@ Nós precisaremos de algumas ferramentas:
 - Um navegador, pode ser qualquer um (não vou expor a minha preferência, pois costuma dar briga rsrs);
 - Obviamente, precisaremos do Python (eu utilizei o Python 3.11.9, mas instale a versão que você quiser e sempre do [site oficial do Python](https://www.python.org/downloads/);
 
-**OBS:** Se o Python, o PIP ou uma biblioteca Python não forem reconhecidos no Windows, muito provavelmente o erro estará no PATH do Windows. Verifique se o caminho do interpretador Python e da pasta "Scripts" estejam adicionadas ao PATH nas variáveis de ambiente:
-```text
-# Variável de ambiente "Path"
-
-C:\Users\<seu_user>\AppData\Local\Programs\Python\Python<versão>\
-C:\Users\<seu_user>\AppData\Local\Programs\Python\Python<versão>\Scripts\
-```
+> [!NOTE]
+> **OBS:** Se o Python, o PIP ou uma biblioteca Python não forem reconhecidos no Windows, muito provavelmente o erro estará no PATH do Windows. Verifique se o caminho do interpretador Python e da pasta "Scripts" estejam adicionadas ao PATH nas variáveis de ambiente:
+> ```text
+> # Variável de ambiente "Path"
+> 
+> C:\Users\<seu_user>\AppData\Local\Programs\Python\Python<versão>\
+> C:\Users\<seu_user>\AppData\Local\Programs\Python\Python<versão>\Scripts\
+> ```
 ***
 
 Ótimo! Agora vamos organizar e só então, vamos ao Django. No seu terminal:
@@ -97,26 +98,27 @@ pip install virtualenvwrapper-win
 ```cmd
 mkvirtualenv <nome_do_seu_venv>
 ```
-**OBS:** Um venv, ou virtual environment (ambiente virtual, em tradução livre) é como uma "caixa" isolada que você cria no seu computador para trabalhar em um projeto Python. Dentro dessa caixa, você pode instalar versões específicas de bibliotecas e pacotes sem interferir com outros projetos ou com as configurações globais do seu sistema. Vantagens: isolamento, versões específicas para cada projeto e facilidade no gerenciamento.
+
+> [!NOTE]
+> **OBS:** Um venv, ou virtual environment (ambiente virtual, em tradução livre) é como uma "caixa" isolada que você cria no seu computador para trabalhar em um projeto Python. Dentro dessa caixa, você pode instalar versões específicas de bibliotecas e pacotes sem interferir com outros projetos ou com as configurações globais do seu sistema. Vantagens: isolamento, versões específicas para cada projeto e facilidade no gerenciamento.
+
 - Após a criação com sucesso, o venv já deve estar ativo. Dessa forma:
 ```cmd
 (<nome_do_seu_venv>) C:\seu\diretorio>
 ```
-**Dica:** O Virtualenvwrapper tem comandos que facilitam a manipulação dos venvs. São alguns deles:
-
-> - "mkvirtualenv <nome_do_seu_venv>" - Cria um venv;
-
-> - "rmvirtualenv <nome_do_seu_venv>" - Exclui um venv;
-
-> - "workon <nome_do_seu_venv>" - Ativa um venv;
-
-> - "deactivate" - Desativa um venv.
+> [!TIP]
+> **Dica:** O Virtualenvwrapper tem comandos que facilitam a manipulação dos venvs. São alguns deles:
+> - `mkvirtualenv <nome_do_seu_venv>` - Cria um venv;
+> - `rmvirtualenv <nome_do_seu_venv>` - Exclui um venv;
+> - `workon <nome_do_seu_venv>` - Ativa um venv;
+> - `deactivate` - Desativa um venv.
 
 - Com o VENV ativo, instale o Django. Use:
 ```cmd
 pip install django
 ```
-**OBS:** Neste projeto foi utilizada a versão 5.1.2. Para instalar esta exata versão: pip install django==5.1.2.
+> [!NOTE]
+> **OBS:** Neste projeto foi utilizada a versão 5.1.2. Para instalar esta exata versão: pip install django==5.1.2.
 
 ## 3. Iniciando um projeto Django
 Navegue até o diretório que você deseja iniciar seu projeto Django. No command prompt se comandos como:
@@ -215,7 +217,8 @@ Quando optamos por **funções**, precisamos programar toda a manipulação de m
 
 Quando se opta por **classes**, o código diminui drasticamente, pois já está programado, basta utilizarmos. 
 
-**OBS:** Neste projeto, usaremos classes, porque não precisamos reinventar a roda e somos iniciantes, né?
+> [!NOTE]
+> **OBS:** Neste projeto, usaremos classes, porque não precisamos reinventar a roda e somos iniciantes, né?
 
 ### 5.2 - Primeiro módulo
 Para continuarmos nossa jornada, vamos criar um módulo complementar. Para isso, abra o terminal com o VENV ativo e dentro do diretório do projeto Django e use:
@@ -239,7 +242,9 @@ INSTALLED_APPS = [
 ]
 ```
 
-**OBS:** Se haverá rotas/URLs no seu módulo, faça:
+> [!NOTE]
+> **OBS:** Se haverá rotas/URLs no seu módulo, faça:
+
 - Dentro do módulo recém-criado, crie um arquivo `urls.py`:
 ```python
 # <nome_do_seu_módulo> > urls.py
@@ -315,17 +320,20 @@ class Cidade(models.Model):
     def __str__(self):
         return f'{self.nome} - {self.uf}'
 ```
-**OBS:** Não, não estou usando as melhores práticas de modelagem, mas... Dá um desconto, é só um exemplo!
+> [!NOTE]
+> **OBS:** Não, não estou usando as melhores práticas de modelagem, mas... Dá um desconto, é só um exemplo!
 
-#### -( Migrações Django )-
-Preciso interromper aqui para lhe dizer que o Django tem um ORM (Object Relational Mapper - Mapeamento objeto-relacional) e já trata das criações de tabela no banco de dados, mas para isso, precisamos solicitar que ele realize as migrações. Use:
-- `python manage.py makemigrations` - Para criar as migrações;
-- `python manage.py migrate` - Para aplicar as migrações no banco.
-Tudo pronto para continuar!
+> [!IMPORTANT]
+> #### -( Migrações Django )-
+> Preciso interromper aqui para lhe dizer que o Django tem um ORM (Object Relational Mapper - Mapeamento objeto-relacional) e já trata das criações de tabela no banco de dados, mas para isso, precisamos solicitar que ele realize as migrações. Use:
+> - `python manage.py makemigrations` - Para criar as migrações;
+> - `python manage.py migrate` - Para aplicar as migrações no banco.
+> 
+> Tudo pronto para continuar!
 
 #### ...Prosseguindo com a view de criação:
 
-- Vamos construir a view. Em views.py faça:
+- Vamos construir a view. Em `views.py` faça:
 ```python
 # Cidade > views.py
 
@@ -433,7 +441,8 @@ urlpatterns = [
     </div>
 {% endblock %}
 ```
-**OBS:** Este template está usando *Django Crispy Forms*. Caso não tenha instalado, volte para [instalar Crispy Forms](#estilos-prontos)!
+> [!WARNING]
+> **OBS:** Este template está usando *Django Crispy Forms*. Caso não tenha instalado, volte para [instalar Crispy Forms](#estilos-prontos)!
 - Agora, dentro do seu módulo Cidade, crie o diretório `<módulo_Cidade>\templates\Cidade`;
 - E dentro dele, adicione um `create-cidade.html`:
 ```html
@@ -613,7 +622,9 @@ Antes de testarmos a listagem de cidade, vamos refazer a página Home:
 #### ...E vamos ao teste da listagem:
 - Inicie o servidor do Django e acesse [`localhost:8000/home`](http://localhost:8000/home);
 - Clique em _Cidades_, se uma lista com as cidades abrir, é porque funcionou!
-**OBS:** O botão de adicionar na lista, também já deve funcionar!
+
+> [!NOTE]
+> **OBS:** O botão de adicionar na lista, também já deve funcionar!
 
 ### 5.6 - Criando uma view de edição
 E vamos fazer a edição!
@@ -769,7 +780,7 @@ urlpatterns = [
 - Agora o botão de deleção um registro estará funcionando!
 
 ### 5.8 - Criando o módulo de Cliente
-> [!TIP]
+> [!IMPORTANT]
 > Aqui fica um desafio, façam a criação, listagem, edição e deleção para a entidade *Clientes*. Não precisa recriar os templates base, apenas faça as heranças!
 
 Vou deixar pelo menos o model de Cliente aqui:
