@@ -781,7 +781,7 @@ urlpatterns = [
 
 ### 5.8 - Criando o módulo de Cliente
 > [!IMPORTANT]
-> Aqui fica um desafio, façam a criação, listagem, edição e deleção para a entidade *Clientes*. Não precisa recriar os templates base, apenas faça as heranças!
+> Aqui fica um desafio, façam a criação, listagem, edição e deleção para a entidade **Clientes**. Não precisa recriar os templates base, apenas faça as heranças!
 
 Vou deixar pelo menos o model de Cliente aqui:
 ```python
@@ -800,13 +800,40 @@ class Cliente(models.Model):
 ```
 
 ### 5.9 - Painel administrativo do Django
+O Django tem um painel administrativo imbutido e já pronto. Nele, nós podemos manipular os dados do banco sem estar dentro do sistema. Este painel é muito usado durante o período de testes e para manutenções do sistema. 
+
+Para usarmos, basta o cadastro de um model no admin do Django. Vamos lá:
+- Primeiramnete, vamos criar um superuser. No terminal:
+```cmd
+python manage.py createsuperuser
+```
+- Preencha o nome de usuário e senha, email pode ser vazio;
+- Agora vamos ao módulo de Cidade. Abra o arquivo `Cidade\admin.py`;
+- Adicione a importação do _model_ e registre no admin:
+```python
+# Cidade > admin.py
+
+from django.contrib import admin
+from .models import Cidade
+
+# Register your models here.
+admin.site.register(Cidade)
+```
+- Inicie o servidor do Django e acesse [`localhost:8000/admin`](http://localhost:8000/admin);
+- Faça login com as credenciais inseridas na criação do _superuser_ que fizemos à pouco;
+
+![Inicial do painel administrativo do Django](https://github.com/antth-Luca/Django_start_guide/blob/main/images/django/inicial-admin.png)
+
+- Escolha a opção `Cidades`;
+- Você deve ver uma lista de todas as cidades que registrou. Daqui você pode adicionar, editar e excluir elas.
+
+![Cidades listadas no admin do Django](https://github.com/antth-Luca/Django_start_guide/blob/main/images/django/cidades-admin.png)
 
 ### 5.10 - Autenticação
 
 ## 6. Resumo comandos Django
 
 ## 7. DTL (Django Template Language)
-
 
 
 # !!! | Atenção: Repositório em construção | !!!
