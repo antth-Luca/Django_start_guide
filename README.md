@@ -118,7 +118,7 @@ mkvirtualenv <nome_do_seu_venv>
 pip install django
 ```
 > [!NOTE]
-> **OBS:** Neste projeto foi utilizada a versão 5.1.2. Para instalar esta exata versão: pip install django==5.1.2.
+> **OBS:** Neste projeto foi utilizada a versão 5.1.2. Para instalar esta exata versão: `pip install django==5.1.2`.
 
 ## 3. Iniciando um projeto Django
 Navegue até o diretório que você deseja iniciar seu projeto Django. No command prompt se comandos como:
@@ -244,28 +244,28 @@ INSTALLED_APPS = [
 
 > [!NOTE]
 > **OBS:** Se haverá rotas/URLs no seu módulo, faça:
-
-- Dentro do módulo recém-criado, crie um arquivo `urls.py`:
-```python
-# <nome_do_seu_módulo> > urls.py
-
-from django.urls import path
-
-urlpatterns = []
-```
-- Dentro do `urls.py` do módulo obrigatório, adicione a importação e inclua as URLs do módulo complementar:
-```python
-# <módulo_obrigatório> > urls.py
-
-from django.contrib import admin
-from django.urls import path, include  # Adicionar o 'include' aqui!
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    # Inclua as urls do módulo:
-    path('', include('<nome_do_seu_módulo>.urls')),
-]
-```
+> 
+> - Dentro do módulo recém-criado, crie um arquivo `urls.py`:
+> ```python
+> # <nome_do_seu_módulo> > urls.py
+> 
+> from django.urls import path
+> 
+> urlpatterns = []
+> ```
+> - Dentro do `urls.py` do módulo obrigatório, adicione a importação e inclua as URLs do módulo complementar:
+> ```python
+> # <módulo_obrigatório> > urls.py
+> 
+> from django.contrib import admin
+> from django.urls import path, include  # Adicionar o 'include' aqui!
+> 
+> urlpatterns = [
+>     path('admin/', admin.site.urls),
+>     # Inclua as urls do módulo:
+>     path('', include('<nome_do_seu_módulo>.urls')),
+> ]
+> ```
 
 ### 5.3 - Criando uma view simples
 Vamos criar nossa primeira view! Uma view com o clássico texto "Olá, mundo!":
