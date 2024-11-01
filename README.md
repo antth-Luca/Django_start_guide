@@ -10,6 +10,8 @@ Vamos lá?!
 ## Sumário
 
 ## 1. Introdução
+Neste guia, eu te auxilio a iniciar um projeto Django e falo um pouco sobre o seu funcionamento. Qualquer dúvida que tiver, basta consultar o projeto espelho que deixei neste mesmo repositório. Obrigado!
+
 ### 1.1 - Eu e o Django
 Há muito tempo, eu tinha uma ideia de projeto para a WEB, mas eu só sabia Python, HTML e CSS. Procurei por algo que me ajudasse a construir este tal projeto, encontrei o Django, me apaixonei e hoje tenho alguns projetos de estudo e amostras produzidas em Django.
 
@@ -166,49 +168,6 @@ TEMPLATES = [
 ]
 ```
 
-### 4.3 - Arquivos estáticos (CSS, JS e imagens)
-Também dentro do `settings.py`, encontre `STATIC` para alterar e adicionar:
-```python
-# <módulo_obrigatório> > settings.py
-
-STATIC_URL = '/static/'  # Adicione uma barra aqui!
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')  # Adicione esta linha!
-]
-```
-
-### 4.4 - Estilos prontos (Crispy Forms)
-Você sabia que existem bibliotecas Python que interagem com o Django e trazem muitos estilos prontos?!
-Eu conheço e lhe apresentarei o **Django Crispy Forms**. Esta biblioteca aplica estilos a formulários. Vamos prepará-la:
-- Abra o terminal;
-- Verifique que o VENV esteja ativo;
-- Instale o Django Crispy Forms. Use:
-```cmd
-pip install django-crispy-forms
-```
-- Instale o Crispy Bootstrap 5. Use:
-```cmd
-pip install crispy-bootstrap5
-```
-- Adicione as bibliotecas ao projeto Django. Abra o settings.py, encontre a constante INSTALLED_APPS e adicione as linhas:
-```python
-# <módulo_obrigatório> > settings.py
-
-INSTALLED_APPS = [
-    <...>  # Não altere as linhas que já existem, apenas adione novas!
-    'crispy_forms',
-    'crispy_bootstrap5',
-]
-```
-- Configure o Bootstrap do Crispy. Adicione a seguinte constante ao `settings.py`, logo abaixo de INSTALLED_APPS:
-```python
-# <módulo_obrigatório> > settings.py
-
-CRISPY_TEMPLATE_PACK = 'bootstrap5'
-```
-Agora, para utilizar, basta adicionar a tag `{% load crispy_forms_tags %}` em uma das primeiras linhas de um template e renderizar o formulário com `{{ form|crispy }}`. Você poderá ver os campos com tamanho e espaçamento definido, todo um estilo pronto!
-Você ainda pode combinar o Crispy com o Bootstrap e acelerar o desenvolvimento.
-
 ## 5. Desenvolvimento Django
 ### 5.1 - Metodologia para as view
 Antes de tudo, precisamos definir se utilizaremos views baseadas em _funções_ ou _classes_.
@@ -302,62 +261,64 @@ python manage.py runserver
 ```
 - Acesse [`localhost:8000/home`](http://localhost:8000/home). Você deve ver uma página branca com a mensagem e isso quer dizer que funcionou. Você criou sua primeira view, parabéns!
 
-### 5.4 - Criando uma view de criação
-Agora criaremos uma view um pouco além. Ela não apenas mostrará um texto, agora vamos mexer com o banco de dados e fazer registros nele. Faça:
-- Crie um módulo com o nome Cidade;
-- Registre o módulo no `settings.py`;
-- Inclua as URLs do novo módulo;
-- Dentro de `models.py` modele a entidade de cidade:
+### 4.3 - Arquivos estáticos (CSS, JS e imagens)
+Agora, vamos adicionar um simples CSS ao nosso home para testarmos os arquivos estáticos. Também dentro do `settings.py`, encontre `STATIC` para alterar e adicionar:
 ```python
-# Cidade > models.py
+# <módulo_obrigatório> > settings.py
 
-from django.db import models
-
-class Cidade(models.Model):
-    nome = models.CharField(max_length=100)
-    uf = models.CharField(max_length=2)
-
-    def __str__(self):
-        return f'{self.nome} - {self.uf}'
-```
-> [!NOTE]
-> **OBS:** Não, não estou usando as melhores práticas de modelagem, mas... Dá um desconto, é só um exemplo!
-
-> [!IMPORTANT]
-> #### -( Migrações Django )-
-> Preciso interromper aqui para lhe dizer que o Django tem um ORM (Object Relational Mapper - Mapeamento objeto-relacional) e já trata das criações de tabela no banco de dados, mas para isso, precisamos solicitar que ele realize as migrações. Use:
-> - `python manage.py makemigrations` - Para criar as migrações;
-> - `python manage.py migrate` - Para aplicar as migrações no banco.
-> 
-> Tudo pronto para continuar!
-
-#### ...Prosseguindo com a view de criação:
-
-- Vamos construir a view. Em `views.py` faça:
-```python
-# Cidade > views.py
-
-from django.views.generic import CreateView
-from django.urls import reverse_lazy
-from .models import Cidade
-
-class CreateCidadeView(CreateView):
-    model = Cidade
-    fields = '__all__'
-    template_name = 'Cidade/create-cidade.html'
-    success_url = reverse_lazy('Home')
-```
-- Crie o arquivo `urls.py`:
-```python
-# Cidade > urls.py
-
-from django.urls import path
-from .views import CreateCidadeView
-
-urlpatterns = [
-    path('criar-cidade', CreateCidadeView.as_view(), name='CreateCidade'),
+STATIC_URL = '/static/'  # Adicione uma barra aqui!
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')  # Adicione esta linha!
 ]
 ```
+- Crie o seguinte diretório:
+```text
+<projeto_django>
+    ⊦ <módulo_obrigatório>
+    ⊦ static
+        ⊦ css
+        ⊦ images
+        ∟ js
+```
+- Dentro dessa pasta `css`, crie o `style-home.css`:
+```css
+body {
+    background-color: #000035;
+    color: #ffffff;
+}
+```
+- Substituao conteúdo do seu `home.html` por:
+```html
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ptbr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="{% static 'css/style-home.css' %}">
+</head>
+<body>
+    <h1>Olá, mundo!</h1>
+</body>
+</html>
+```
+
+> [!NOTE]
+> **OBS:** Note que eu adicionei a tag `{% load static %}` para acionar o carregamento das URLs de arquivos estáticos e a tag `{% static 'css/style-home.css' %}` para adicionar a URL de um CSS.
+
+- Se você recarregar a página Home, os estilos serão aplicados!
+
+### 4.4 - Estilos prontos
+Vamos acelerar o desenvolvimento do nosso aplicativo Django com estilos prontos?!
+
+Existem diversos caminhos que levam ao mesmo objetivo. Se combinarmos todos eles, teremos um resultado bom!
+
+#### 4.4.1 - Bootstrap e Bootstrap Icons
+O Bootstrap é um framework front-end que disponibiliza muitos estilos CSS e scripts JS prontos. Se você ainda não conhece ou não sabe utilizar tal ferramenta, vale a pena conhecer!
+
+Este framework é adicionado através de links de CSS e JS, além de seu "primo" que traz ícones prontos. Vamos usar todos eles! Para começar:
 - Dentro do seu projeto Django, crie o diretório `<projeto_django>\templates\Bases`;
 - Dentro de Bases, crie o template `base-global.html`:
 ```html
@@ -380,7 +341,42 @@ urlpatterns = [
 </body>
 </html>
 ```
-- Também dentro de Bases, crie o `base-navbar.html`:
+- Pronto! Você já tem uma base com o Bootstrap e o Bootstrap Icons carregados. Agora é só estender outros templates desse com a tag `{% extends '<caminho>/<para_o>/<template>' %}` e utilizar das classes e componentes prontos. Faremos isso mais à frente!
+
+#### 4.4.2 - Crispy Forms
+O Django tem uma biblioteca chamada _Crispy Forms_ que utiliza de classes do Bootstrap para normalizar os formulários, deixando-os "crocantes". Vamos preparar seu uso?
+- Abra o terminal;
+- Verifique que o VENV esteja ativo;
+- Instale o Django Crispy Forms. Use:
+```cmd
+pip install django-crispy-forms
+```
+- Instale o Crispy Bootstrap 5. Use:
+```cmd
+pip install crispy-bootstrap5
+```
+- Adicione as bibliotecas ao projeto Django. Abra o settings.py, encontre a constante INSTALLED_APPS e adicione as linhas:
+```python
+# <módulo_obrigatório> > settings.py
+
+INSTALLED_APPS = [
+    <...>  # Não altere as linhas que já existem, apenas adione novas!
+    'crispy_forms',
+    'crispy_bootstrap5',
+]
+```
+- Configure o Bootstrap do Crispy. Adicione a seguinte constante ao `settings.py`, logo abaixo de INSTALLED_APPS:
+```python
+# <módulo_obrigatório> > settings.py
+
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
+```
+Agora, para utilizar, basta adicionar a tag `{% load crispy_forms_tags %}` em uma das primeiras linhas de um template e renderizar o formulário com `{{ form|crispy }}`. Você poderá ver os campos com tamanho e espaçamento definido, todo um estilo pronto!
+Você ainda pode combinar o Crispy com o Bootstrap e acelerar o desenvolvimento.
+
+#### 4.4.3 - Home 2.0
+Antes de prosseguirmos, vamos utilizar do poder do Bootstrap na prática?
+- Dentro do diretório `<projeto_django>\templates\Bases`, crie o `base-navbar.html`:
 ```html
 {% extends 'Bases/base-global.html' %}
 
@@ -409,7 +405,102 @@ urlpatterns = [
     </main>
 {% endblock %}
 ```
-- Ainda dentro de Bases, crie `base-create.html`:
+- E substitua o conteúdo de `home.html` por:
+```html
+{% extends 'Bases/base-navbar.html' %}
+
+{% block titulo %}
+    Home
+{% endblock %}
+
+{% block main %}
+    <div class="container-fluid text-center mt-5">
+        <h1 class="h1 mb-2">Central de Links</h1>
+        <div class="row justify-content-center">
+            <div class="col-8 col-md-6">
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action active">Home</a>
+                    <a href="{% url 'ListCidade' %}" class="list-group-item list-group-item-action">Cidades</a>
+                    <a href="#" class="list-group-item list-group-item-action">Clientes</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+```
+- Ao recarregar a página Home, você deve ver algo assim:
+
+![Página Home](https://github.com/antth-Luca/Django_start_guide/blob/main/images/sistema/pag-home.png)
+
+### 5.4 - Criando uma view de criação
+Agora criaremos uma view um pouco além. Ela não apenas mostrará um texto, agora vamos mexer com o banco de dados e fazer registros nele. Faça:
+- Crie um módulo com o nome Cidade;
+- Registre o módulo no `settings.py`;
+- Inclua as URLs do novo módulo;
+- Dentro de `models.py` modele a entidade de cidade:
+```python
+# Cidade > models.py
+
+from django.db import models
+
+class Cidade(models.Model):
+    nome = models.CharField(max_length=100)
+    uf = models.CharField(max_length=2)
+
+    def __str__(self):
+        return f'{self.nome} - {self.uf}'
+```
+> [!NOTE]
+> **OBS:** Não, não estou usando as melhores práticas de modelagem, mas... Dá um desconto, é só um exemplo!
+
+- Abra o **DB Browser**:
+
+![DB Browser após aberto](https://github.com/antth-Luca/Django_start_guide/blob/main/images/db-browser/interface-inicial.png)
+- Clique em **arquivo** no canto superior esquerdo da tela. Depois **Abrir banco de dados somente leitura** e escolha o arquivo `<projeto_django>\db.sqlite`:
+
+![Opções de arquivo no DB Browser](https://github.com/antth-Luca/Django_start_guide/blob/main/images/db-browser/opcoes-arquivo.png)
+
+- Você deve encontrar um arquivo vazio, mas...
+
+> [!IMPORTANT]
+> #### Migrações
+> Toda vez que um `model` for modelado ou alterado, precisa-se realizar a migração. O Django tem um ORM (Object Relational Mapper - Mapeamento objeto-relacional) e já trata das criações e alterações de tabela no banco de dados, mas para isso, precisamos solicitar que ele realize tais ações, isso são as migrações. Use:
+> - `python manage.py makemigrations` - Para criar as migrações;
+> - `python manage.py migrate` - Para aplicar as migrações no banco.
+> 
+> Tudo pronto para continuar!
+
+#### ...Prosseguindo com a view de criação:
+
+- Se você atualizar o **DB Browser**, poderá ver algumas tabelas;
+- Nelas, encontrará uma tabela chamada de `Cidade_cidade`. Este é um padrão do Django: "`<nome_do_módulo>_<nome_do_model>`";
+- Clique com o botão direito em cima da tabela e use a opção **Navegar tabela**, agora pode ver que a tabela está vazia. Vamos popula-la!
+- Construa a view de criação. Em `Cidade\views.py` faça:
+```python
+# Cidade > views.py
+
+from django.views.generic import CreateView
+from django.urls import reverse_lazy
+from .models import Cidade
+
+class CreateCidadeView(CreateView):
+    model = Cidade
+    fields = '__all__'
+    template_name = 'Cidade/create-cidade.html'
+    success_url = reverse_lazy('Home')
+```
+- Crie o arquivo `urls.py`:
+```python
+# Cidade > urls.py
+
+from django.urls import path
+from .views import CreateCidadeView
+
+urlpatterns = [
+    path('criar-cidade', CreateCidadeView.as_view(), name='CreateCidade'),
+]
+```
+- Dentro de `<projeto_django>\templates\Bases`, crie `base-create.html`:
 ```html
 {% extends 'Bases/base-global.html' %}
 {% load crispy_forms_tags %}
@@ -442,7 +533,7 @@ urlpatterns = [
 {% endblock %}
 ```
 > [!WARNING]
-> **OBS:** Este template está usando *Django Crispy Forms*. Caso não tenha instalado, volte para [instalar Crispy Forms](#44---estilos-prontos-crispy-forms)!
+> **OBS:** Este template está usando *Django Crispy Forms*. Caso não tenha instalado, volte para [instalar Crispy Forms](#442---crispy-forms)!
 - Agora, dentro do seu módulo Cidade, crie o diretório `<módulo_Cidade>\templates\Cidade`;
 - E dentro dele, adicione um `create-cidade.html`:
 ```html
@@ -453,18 +544,40 @@ urlpatterns = [
 - Inicie o servidor com o comando `python manage.py runserver` e acesse no navegador [`localhost:8000/criar-cidade`](http://localhost:8000/criar-cidade);
 - Você deve ver um lindo formulário para cadastrar uma cidade e isso significa que está tudo certo!
 - Preencha os campos e clique no botão Salvar;
-- Abra o **DB Browser**:
+- Após salvar alguma cidade, atualize o **DB Browser** e veja a tabela de `Cidade_cidade`. A cidade que acabou de cadastrar lá no sistema, estará na tabela e isso quer dizer que funciona!
 
-![DB Browser após aberto](https://github.com/antth-Luca/Django_start_guide/blob/main/images/db-browser/interface-inicial.png)
-- Clique em **arquivo** no canto superior esquerdo da tela. Depois **Abrir banco de dados somente leitura** e escolha o arquivo `<projeto_django>\db.sqlite`:
+### 5.5 - Painel administrativo do Django
+Vamos facilitar a listagem de cidades?! O Django tem um painel administrativo imbutido e já pronto. Nele, nós podemos manipular os dados do banco sem estar dentro do sistema. Este painel é muito usado durante o período de testes e para manutenções do sistema. 
 
-![Opções de arquivo no DB Browser](https://github.com/antth-Luca/Django_start_guide/blob/main/images/db-browser/opcoes-arquivo.png)
+Para usarmos, basta o cadastro de um model no admin do Django. Vamos lá:
+- Primeiramente, vamos criar um superuser. No terminal:
+```cmd
+python manage.py createsuperuser
+```
+- Preencha o nome de usuário e senha, email pode ser vazio;
+- Agora vamos ao módulo de Cidade. Abra o arquivo `Cidade\admin.py`;
+- Adicione a importação do _model_ e registre no admin:
+```python
+# Cidade > admin.py
 
-- Você poderá encontrar uma tabela chamada de `Cidade_cidade`. Este é um padrão do Django: "`<nome_do_módulo>_<nome_do_model>`";
-- Se você clicar com o botão direito em cima da tabela e usar a opção **Navegar tabela**, poderá ver a cidade que acabou de cadastrar lá no sistema e isso quer dizer que funciona!
+from django.contrib import admin
+from .models import Cidade
 
-### 5.5 - Criando uma view de listagem
-Bem, ficar vendo os registros diretamente no banco não é viável quando se pensa nos usuários, certo?
+# Register your models here.
+admin.site.register(Cidade)
+```
+- Inicie o servidor do Django e acesse [`localhost:8000/admin`](http://localhost:8000/admin);
+- Faça login com as credenciais inseridas na criação do _superuser_ que fizemos à pouco;
+
+![Inicial do painel administrativo do Django](https://github.com/antth-Luca/Django_start_guide/blob/main/images/django/inicial-admin.png)
+
+- Escolha a opção `Cidades`;
+- Você deve ver uma lista de todas as cidades que registrou. Daqui você pode adicionar, editar e excluir elas.
+
+![Cidades listadas no admin do Django](https://github.com/antth-Luca/Django_start_guide/blob/main/images/django/cidades-admin.png)
+
+### 5.6 - Criando uma view de listagem
+Bem, ficar vendo os registros diretamente no banco ou pelo painel de administrador, não é viável quando se pensa nos usuários comuns, certo?
 
 Então vamos construir uma view de listagem:
 - Primeiramente, em `views.py` adicione a importação e crie a view de listagem:
@@ -564,38 +677,20 @@ urlpatterns = [
     {% endfor %}
 {% endblock %}
 ```
-#### -( Página Home 2.0 )-
-Antes de testarmos a listagem de cidade, vamos refazer a página Home:
-- Substitua o conteúdo de `home.html` por:
+- Antes de testarmos a listagem de cidade, vamos preencher o _href_ do link de _Cidades_ na nossa página Home:
 ```html
-{% extends 'Bases/base-navbar.html' %}
+<!-- Home > templates > Home > home.html -->
 
-{% block titulo %}
-    Home
-{% endblock %}
-
-{% block main %}
-    <div class="container-fluid text-center mt-5">
-        <h1 class="h1 mb-2">Central de Links</h1>
-        <div class="row justify-content-center">
-            <div class="col-8 col-md-6">
-                <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action active">Home</a>
-                    <a href="{% url 'ListCidade' %}" class="list-group-item list-group-item-action">Cidades</a>
-                    <a href="#" class="list-group-item list-group-item-action">Clientes</a>
-                </div>
-            </div>
-        </div>
-    </div>
-{% endblock %}
+<!-- Basta substituir '#' do href! -->
+<...>
+    <a href="{% url 'ListCidade' %}" class="list-group-item list-group-item-action">Cidades</a>
+<...>
 ```
-
-#### ...E vamos ao teste da listagem:
-- Inicie o servidor do Django e acesse [`localhost:8000/home`](http://localhost:8000/home);
+- Agora sim! Inicie o servidor do Django e acesse [`localhost:8000/home`](http://localhost:8000/home);
 - Clique em _Cidades_, se uma lista com as cidades abrir, é porque funcionou!
 
 > [!NOTE]
-> **OBS:** O botão de adicionar na lista, também já deve funcionar!
+> **OBS:** O botão de adicionar na lista, também já deve funcionar, criando novas cidades!
 
 ### 5.6 - Criando uma view de edição
 E vamos fazer a edição!
@@ -769,36 +864,6 @@ class Cliente(models.Model):
     def __str__(self):
         return f'{self.nome}'
 ```
-
-### 5.9 - Painel administrativo do Django
-O Django tem um painel administrativo imbutido e já pronto. Nele, nós podemos manipular os dados do banco sem estar dentro do sistema. Este painel é muito usado durante o período de testes e para manutenções do sistema. 
-
-Para usarmos, basta o cadastro de um model no admin do Django. Vamos lá:
-- Primeiramnete, vamos criar um superuser. No terminal:
-```cmd
-python manage.py createsuperuser
-```
-- Preencha o nome de usuário e senha, email pode ser vazio;
-- Agora vamos ao módulo de Cidade. Abra o arquivo `Cidade\admin.py`;
-- Adicione a importação do _model_ e registre no admin:
-```python
-# Cidade > admin.py
-
-from django.contrib import admin
-from .models import Cidade
-
-# Register your models here.
-admin.site.register(Cidade)
-```
-- Inicie o servidor do Django e acesse [`localhost:8000/admin`](http://localhost:8000/admin);
-- Faça login com as credenciais inseridas na criação do _superuser_ que fizemos à pouco;
-
-![Inicial do painel administrativo do Django](https://github.com/antth-Luca/Django_start_guide/blob/main/images/django/inicial-admin.png)
-
-- Escolha a opção `Cidades`;
-- Você deve ver uma lista de todas as cidades que registrou. Daqui você pode adicionar, editar e excluir elas.
-
-![Cidades listadas no admin do Django](https://github.com/antth-Luca/Django_start_guide/blob/main/images/django/cidades-admin.png)
 
 ### 5.10 - Autenticação
 Agora vamos adicionar a necessidade de que o usuário esteja logado para acessar uma página. Vamos experimentar na página Home!
