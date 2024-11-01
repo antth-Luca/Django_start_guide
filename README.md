@@ -1,5 +1,3 @@
-# !!! | Atenção: Repositório em construção | !!!
-
 # Guia para iniciantes - framework Django
 Este guia destina-se a pessoas que querem aprender um framework para WEB, mas não sabem por onde começar.
 
@@ -8,6 +6,34 @@ Eu sempre recomendo o Django, pelo seu lema "baterias inclusas" e por ser em Pyt
 Vamos lá?!
 
 ## Sumário
+- [1. Introdução](#1-introdução):
+    - [1.1 - Eu e o Django](#11---eu-e-o-django);
+    - [1.2 - Django e o mundo profissional](#12---django-e-o-mundo-profissional);
+    - [1.3 - Mas afinal, o que é Django?](#13---mas-afinal-o-que-é-django):
+        - [1.3.1 - Arquitetura Django](#131---arquitetura-django).
+- [2. Preparando o ambiente](#2-preparando-o-ambiente);
+- [3. Iniciando um projeto Django](#3-iniciando-um-projeto-django);
+- [4. Primeiras configurações dentro do Django](#4-primeiras-configurações-dentro-do-django):
+    - [4.1 - Local e hora](#41---local-e-hora);
+    - [4.2 - Templates](#42---templates).
+- [5. Desenvolvimento Django](#5-desenvolvimento-django):
+    - [5.1 - Metodologia para as views](#51---metodologia-para-as-views);
+    - [5.2 - Primeiro módulo](#52---primeiro-módulo);
+    - [5.3 - Criando uma view simples](#53---criando-uma-view-simples);
+    - [5.4 - Arquivos estáticos](#54---arquivos-estáticos-css-js-e-imagens);
+    - [5.5 - Estilos prontos](#55---estilos-prontos):
+        - [5.5.1 - Bootstrap e Bootstrap Icons](#551---bootstrap-e-bootstrap-icons);
+        - [5.5.2 - Crispy Forms](#552---crispy-forms);
+        - [5.5.3 - Home 2.0](#553---home-20).
+    - [5.6 - Criando uma view de criação](#56---criando-uma-view-de-criação);
+    - [5.7 - Painel administrativo do Django](#57---painel-administrativo-do-django);
+    - [5.8 - Criando uma view de listagem](#58---criando-uma-view-de-listagem);
+    - [5.9 - Criando uma view de edição](#59---criando-uma-view-de-edição);
+    - [5.10 - Criando uma view de deleção](#510---criando-uma-view-de-deleção);
+    - [5.11 - Criando o módulo de Cliente](#511---criando-o-módulo-de-cliente);
+    - [5.12 - Autenticação](#512---autenticação);
+    - [6. Resumo comandos Django](#6-resumo-comandos-django);
+    - [7. DTL](#7-dtl-django-template-language).
 
 ## 1. Introdução
 Neste guia, eu te auxilio a iniciar um projeto Django e falo um pouco sobre o seu funcionamento. Qualquer dúvida que tiver, basta consultar o projeto espelho que deixei neste mesmo repositório. Obrigado!
@@ -169,7 +195,7 @@ TEMPLATES = [
 ```
 
 ## 5. Desenvolvimento Django
-### 5.1 - Metodologia para as view
+### 5.1 - Metodologia para as views
 Antes de tudo, precisamos definir se utilizaremos views baseadas em _funções_ ou _classes_.
 
 Quando optamos por **funções**, precisamos programar toda a manipulação de método HTTP e retorno de resposta e outros, mas temos mais liberdade.
@@ -261,7 +287,7 @@ python manage.py runserver
 ```
 - Acesse [`localhost:8000/home`](http://localhost:8000/home). Você deve ver uma página branca com a mensagem e isso quer dizer que funcionou. Você criou sua primeira view, parabéns!
 
-### 4.3 - Arquivos estáticos (CSS, JS e imagens)
+### 5.4 - Arquivos estáticos (CSS, JS e imagens)
 Agora, vamos adicionar um simples CSS ao nosso home para testarmos os arquivos estáticos. Também dentro do `settings.py`, encontre `STATIC` para alterar e adicionar:
 ```python
 # <módulo_obrigatório> > settings.py
@@ -310,12 +336,12 @@ body {
 
 - Se você recarregar a página Home, os estilos serão aplicados!
 
-### 4.4 - Estilos prontos
+### 5.5 - Estilos prontos
 Vamos acelerar o desenvolvimento do nosso aplicativo Django com estilos prontos?!
 
 Existem diversos caminhos que levam ao mesmo objetivo. Se combinarmos todos eles, teremos um resultado bom!
 
-#### 4.4.1 - Bootstrap e Bootstrap Icons
+#### 5.5.1 - Bootstrap e Bootstrap Icons
 O Bootstrap é um framework front-end que disponibiliza muitos estilos CSS e scripts JS prontos. Se você ainda não conhece ou não sabe utilizar tal ferramenta, vale a pena conhecer!
 
 Este framework é adicionado através de links de CSS e JS, além de seu "primo" que traz ícones prontos. Vamos usar todos eles! Para começar:
@@ -343,7 +369,7 @@ Este framework é adicionado através de links de CSS e JS, além de seu "primo"
 ```
 - Pronto! Você já tem uma base com o Bootstrap e o Bootstrap Icons carregados. Agora é só estender outros templates desse com a tag `{% extends '<caminho>/<para_o>/<template>' %}` e utilizar das classes e componentes prontos. Faremos isso mais à frente!
 
-#### 4.4.2 - Crispy Forms
+#### 5.5.2 - Crispy Forms
 O Django tem uma biblioteca chamada _Crispy Forms_ que utiliza de classes do Bootstrap para normalizar os formulários, deixando-os "crocantes". Vamos preparar seu uso?
 - Abra o terminal;
 - Verifique que o VENV esteja ativo;
@@ -374,7 +400,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 Agora, para utilizar, basta adicionar a tag `{% load crispy_forms_tags %}` em uma das primeiras linhas de um template e renderizar o formulário com `{{ form|crispy }}`. Você poderá ver os campos com tamanho e espaçamento definido, todo um estilo pronto!
 Você ainda pode combinar o Crispy com o Bootstrap e acelerar o desenvolvimento.
 
-#### 4.4.3 - Home 2.0
+#### 5.5.3 - Home 2.0
 Antes de prosseguirmos, vamos utilizar do poder do Bootstrap na prática?
 - Dentro do diretório `<projeto_django>\templates\Bases`, crie o `base-navbar.html`:
 ```html
@@ -432,7 +458,7 @@ Antes de prosseguirmos, vamos utilizar do poder do Bootstrap na prática?
 
 ![Página Home](https://github.com/antth-Luca/Django_start_guide/blob/main/images/sistema/pag-home.png)
 
-### 5.4 - Criando uma view de criação
+### 5.6 - Criando uma view de criação
 Agora criaremos uma view um pouco além. Ela não apenas mostrará um texto, agora vamos mexer com o banco de dados e fazer registros nele. Faça:
 - Crie um módulo com o nome Cidade;
 - Registre o módulo no `settings.py`;
@@ -534,7 +560,7 @@ urlpatterns = [
 ```
 > [!WARNING]
 > **OBS:** Este template está usando *Django Crispy Forms*. Caso não tenha instalado, volte para [instalar Crispy Forms](#442---crispy-forms)!
-- Agora, dentro do seu módulo Cidade, crie o diretório `<módulo_Cidade>\templates\Cidade`;
+- Agora, dentro do seu módulo Cidade, crie o diretório `Cidade\templates\Cidade`;
 - E dentro dele, adicione um `create-cidade.html`:
 ```html
 {% extends 'Bases/base-create.html' %}
@@ -546,7 +572,7 @@ urlpatterns = [
 - Preencha os campos e clique no botão Salvar;
 - Após salvar alguma cidade, atualize o **DB Browser** e veja a tabela de `Cidade_cidade`. A cidade que acabou de cadastrar lá no sistema, estará na tabela e isso quer dizer que funciona!
 
-### 5.5 - Painel administrativo do Django
+### 5.7 - Painel administrativo do Django
 Vamos facilitar a listagem de cidades?! O Django tem um painel administrativo imbutido e já pronto. Nele, nós podemos manipular os dados do banco sem estar dentro do sistema. Este painel é muito usado durante o período de testes e para manutenções do sistema. 
 
 Para usarmos, basta o cadastro de um model no admin do Django. Vamos lá:
@@ -576,7 +602,7 @@ admin.site.register(Cidade)
 
 ![Cidades listadas no admin do Django](https://github.com/antth-Luca/Django_start_guide/blob/main/images/django/cidades-admin.png)
 
-### 5.6 - Criando uma view de listagem
+### 5.8 - Criando uma view de listagem
 Bem, ficar vendo os registros diretamente no banco ou pelo painel de administrador, não é viável quando se pensa nos usuários comuns, certo?
 
 Então vamos construir uma view de listagem:
@@ -644,7 +670,7 @@ urlpatterns = [
     </div>
 {% endblock %}
 ```
-- Agora dentro de `<módulo_Cidade>\templates\Cidade`, crie o `list-cidade.html`:
+- Agora dentro de `Cidade\templates\Cidade`, crie o `list-cidade.html`:
 ```html
 {% extends 'Bases/base-list.html' %}
 
@@ -692,7 +718,7 @@ urlpatterns = [
 > [!NOTE]
 > **OBS:** O botão de adicionar na lista, também já deve funcionar, criando novas cidades!
 
-### 5.6 - Criando uma view de edição
+### 5.9 - Criando uma view de edição
 E vamos fazer a edição!
 - Adicione a importação e crie a view:
 ```python
@@ -774,7 +800,7 @@ urlpatterns = [
 - Inicie o servidor do Django e acesse [`localhost:8000/list-cidade`](http://localhost:8000/list-cidade);
 - Agora o botão de editar um registro estará funcionando!
 
-### 5.7 - Criando uma view de deleção
+### 5.10 - Criando uma view de deleção
 Agora, a última função CRUD... Vamos fazer a view de deleção:
 - Adicione a importa e view:
 ```python
@@ -845,7 +871,7 @@ urlpatterns = [
 - Inicie o servidor do Django e acesse [`localhost:8000/list-cidade`](http://localhost:8000/list-cidade);
 - Agora o botão de deleção um registro estará funcionando!
 
-### 5.8 - Criando o módulo de Cliente
+### 5.11 - Criando o módulo de Cliente
 > [!IMPORTANT]
 > Aqui fica um desafio, façam a criação, listagem, edição e deleção para a entidade **Clientes**. Não precisa recriar os templates base, apenas faça as heranças!
 
@@ -865,7 +891,7 @@ class Cliente(models.Model):
         return f'{self.nome}'
 ```
 
-### 5.10 - Autenticação
+### 5.12 - Autenticação
 Agora vamos adicionar a necessidade de que o usuário esteja logado para acessar uma página. Vamos experimentar na página Home!
 
 Para isso, precisamos configurar e depois adicionar a restrição:
@@ -994,8 +1020,39 @@ urlpatterns = [
 - Se você acessar [`localhost:8000/cadastrar`](http://localhost:8000/cadastrar), podera se cadastrar como um novo usuário!
 
 ## 6. Resumo comandos Django
+Esta seção conta com um resumo de comandos do Django. Uma lista com o comando e sua função. Segue:
+- `django-admin startproject <nome_projeto>` - Cria um projeto Django;
+- `python manage.py runserver` - Inicia o serevidor do Django;
+- `python manage.py startapp <nome_módulo>` - Cria um módulo complementar;
+- `python manage.py makemigrations` - Cria migrações;
+- `python manage.py migrate` - Aplica migrações no banco;
+- `python manage.py createsuperuser` - Cria um superusuário.
 
 ## 7. DTL (Django Template Language)
+Esta seção dedica-se a passar um pouco sobre o DTL, ou Django Template Language. Segue a lista com _tag_ e função:
+- `{% load static %}` - Carrega as URLs de arquivos estáticos;
+- `{% static '<caminho_para_arquivo>' %}` - É substituída pela URL real do arquivo estático para qual aponta;
+- `{% block <nome_bloco> %}` - Abre um bloco dinâmico. Blocos dinâmicos podem ser substituídos nos templates herdados;
+- `{% endblock %}` - Fecha um bloco dinâmico;
+- `{% load crispy_forms_tags %}` - Carrega as tags do Crispy Forms;
+- `{{ form|crispy }}` - Renderiza um formulário com Crispy;
+- `{% csrf_token %}` - Renderiza o campo do CSRF Token (proteção contra ataque CSRF);
+- `{{ form.errors }}` - Renderiza como texto os erros que forem levantados no formulário;
+- `{{ form.as_p }}` - Renderiza um formulário como parágrafo;
+- `{{ <nome_variável> }}` - Imprime o valor de uma variável como texto no HTML. Suporta objetos e dicionários;
+- `{{ user.username }}` - Imprime o 'username' do usuário como texto no HTML;
+- `{% extends '<caminho_para_template>' %}` - Define que o template atual herda do template apontado na tag;
+- `{% for <variável> in <lista_ou_número> %}` - Abre uma estrutura de repetição FOR;
+- `{{ forloop.counter }}` - Renderiza como texto o número contador do FOR;
+- `{% empty %}` - Indica uma alternativa, caso o FOR não aconteça. Por exmplo, sem conteúdo para mostrar;
+- `{% endfor %}` - Fecha uma estrutura de repetição FOR;
+- `{% if <condição> %}` - Abre uma estrutura condicional IF. Pode interagir com variáveis;
+- `{% else %}` - Indica uma alternativa, o ELSE;
+- `{% elif <condição> %}` - Indica uma alterativa condicional, ELSE IF;
+- `{% endif %}` - Fecha uma estrutura condicional IF.
 
+# Agradecimento
+Eu gostaria de agradecer você por ter chego até aqui e espero ter ajudado!
 
-# !!! | Atenção: Repositório em construção | !!!
+# Autor
+- [@antthLuca](https://github.com/antth-luca) - Luca Anthony.
