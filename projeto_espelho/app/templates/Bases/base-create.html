@@ -13,7 +13,7 @@
                     {% csrf_token %}
 
                     <h6 class="display-6 text-center">Novo registro</h6>
-                    <h4 class="h4 mt-2 text-center">Cadastrando {% block 'tipo_cadastro' %}{% endblock %}</h4>
+                    <h4 class="h4 mt-2 text-center">Cadastrando {% block tipo_cadastro %}{% endblock %}</h4>
                     <h6 class="h6 mb-4 text-center">Os campos com (*) são obrigatórios!</h6>
                     <h6 class="text-danger">{{ form.errors }}</h6>
 

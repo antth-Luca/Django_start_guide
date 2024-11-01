@@ -33,7 +33,8 @@ INSTALLED_APPS = [
     'Central.apps.CentralConfig',
     'Cidade.apps.CidadeConfig',
     'Cliente.apps.ClienteConfig',
-    'Login_Logout.apps.LoginLogoutConfig'
+    'Login_Logout.apps.LoginLogoutConfig',
+    'Cadastro.apps.CadastroConfig',
 ]
 
 

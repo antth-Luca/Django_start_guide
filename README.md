@@ -7,7 +7,7 @@ Eu sempre recomendo o Django, pelo seu lema "baterias inclusas" e por ser em Pyt
 
 Vamos lá?!
 
-# Sumário
+## Sumário
 
 ## 1. Introdução
 ### 1.1 - Eu e o Django
@@ -442,7 +442,7 @@ urlpatterns = [
 {% endblock %}
 ```
 > [!WARNING]
-> **OBS:** Este template está usando *Django Crispy Forms*. Caso não tenha instalado, volte para [instalar Crispy Forms](#estilos-prontos)!
+> **OBS:** Este template está usando *Django Crispy Forms*. Caso não tenha instalado, volte para [instalar Crispy Forms](#44---estilos-prontos-crispy-forms)!
 - Agora, dentro do seu módulo Cidade, crie o diretório `<módulo_Cidade>\templates\Cidade`;
 - E dentro dele, adicione um `create-cidade.html`:
 ```html
@@ -801,6 +801,132 @@ admin.site.register(Cidade)
 ![Cidades listadas no admin do Django](https://github.com/antth-Luca/Django_start_guide/blob/main/images/django/cidades-admin.png)
 
 ### 5.10 - Autenticação
+Agora vamos adicionar a necessidade de que o usuário esteja logado para acessar uma página. Vamos experimentar na página Home!
+
+Para isso, precisamos configurar e depois adicionar a restrição:
+- Crie um módulo complementar `Autenticacao` com `python manage.py startapp Autenticacao`;
+- Registre o módulo no `INSTALLED_APPS` do `<módulo_obrigatório>\settings.py` e inclua as URLs;
+- Crie as seguintes views para _login_ e _logout_, respectivamente:
+```python
+# Autenticacao > views.py
+
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.forms import AuthenticationForm
+
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
+from django.shortcuts import redirect
+
+# Create your views here.
+class CustomLoginView(LoginView):
+    form_class = AuthenticationForm
+    template_name = 'Login_Logout/entrada.html'
+
+
+@login_required
+def SaidaView(request):
+    logout(request)
+    return redirect('Entrada')
+```
+- Crie o diretório e template `Autenticacao\templates\Autenticacao\entrada.html`:
+```html
+{% extends 'Bases/base-global.html' %}
+{% load crispy_forms_tags %}
+
+{% block titulo %}
+    Entrando
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid" style="margin-top: 25vh;">
+        <div class="row">
+            <div class="col-8 col-md-6 col-lg-4 col-xl-2 mx-auto">
+                <form method="post">
+                    {% csrf_token %}
+
+                    <h1 class="display-6 text-center">Entrando</h1>
+
+                    <div class="d-flex flex-column">
+                        {{ form|crispy }}
+
+                        <button type="submit" class="btn btn-primary mt-4 align-self-end">Entrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+```
+- Registre as URLs de _login_ e _logout_:
+```python
+from django.urls import path
+from .views import CustomLoginView, SaidaView
+
+urlpatterns = [
+    path('entrar', CustomLoginView.as_view(), name='Entrada'),
+    path('sair', SaidaView, name='Saida'),
+]
+```
+- Agora configure as URLs para _login_, _login redirect_ e _logout redirect_ em `<módulo_obrigatório>\settings.py`:
+```python
+# <módulo_obrigatório> > settings.py
+
+# Definido URLs
+LOGIN_URL = 'Entrada'  # Esta será a URL para entrada/login
+LOGIN_REDIRECT_URL = 'Home'  # Esta será a URL de redirecionamento após a entrada/login
+LOGOUT_REDIRECT_URL = 'Entrada'  # Esta será a URl de redirecionamento após a saída/logout
+```
+- Acesse a _HomeView_ em `Home\views.py` e adicione a restrição de login para abrir esta view:
+```python
+# Home > views.py
+
+from django.contrib.auth.mixins import LoginRequiredMixin  # Adicione esta importação!
+from django.views.generic import TemplateView
+from django.urls import reverse_lazy
+
+# Create your views here.
+class HomeView(LoginRequiredMixin, TemplateView):  # Sua view com restrição deve herdar de 'LoginRequiredMixin'!
+    login_url = reverse_lazy('Entrada')  # Se esta view (Home, no caso) for acessada sem login, para onde o usuário deverá ser redirecionado?
+    template_name = 'Central/home.html'
+```
+- Pronto! Se você tentar acessar [`localhost:8000/home`](http://localhost:8000/home), será bloqueado e redirecionado para fazer login, basta usar as credenciais de superuser [já criadas](#59---painel-administrativo-do-django)!
+
+***
+
+Agora, se você precisar adicionar um cadastro de **usuário externos** e **não administradores**, onde ele mesmo insere as credenciais e pode logar. Faça:
+- Crie um módulo _Cadastro_;
+- Registre o módulo no `settings.py` e inclua as URLs;
+- Crie a _view_:
+```python
+# Cadastro > views.py
+
+from django.urls import reverse_lazy
+from django.views.generic.edit import CreateView
+from django.contrib.auth.forms import UserCreationForm
+
+class CadastroUserView(CreateView):
+    form_class = UserCreationForm
+    template_name = 'Cadastro/cadastro.html'
+    success_url = reverse_lazy('Entrada')
+```
+- Vamos cuidar do template `Cadastro\templates\Cadastro\cadastro.html`:
+```html
+{% extends 'Bases/base-create.html' %}
+
+{% block tipo_cadastro %}usuário{% endblock %}
+
+{% block botao_submit %}Cadastrar{% endblock %}
+```
+- Registre a URL em `Cadastro\urls.py`:
+```python
+from django.urls import path
+from .views import CadastroUserView
+
+urlpatterns = [
+    path('cadastrar/', CadastroUserView.as_view(), name='CadastroUser'),
+]
+```
+- Se você acessar [`localhost:8000/cadastrar`](http://localhost:8000/cadastrar), podera se cadastrar como um novo usuário!
 
 ## 6. Resumo comandos Django
 
